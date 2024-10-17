@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Livewire\Products;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +24,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
+    Route::get('/productos',Products::class);
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
