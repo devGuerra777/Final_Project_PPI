@@ -63,6 +63,7 @@
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                             <button wire:click="editProduct({{ $product->id }})" class="text-indigo-600 hover:text-indigo-900">Editar</button>
                             <button wire:click="deleteProduct({{ $product->id }})" class="ml-4 text-red-600 hover:text-red-900">Eliminar</button>
+                            <a href="{{ route('products.show', $product->id) }}" class="ml-4 text-blue-600 hover:text-blue-900">Ver</a>
                         </td>
                     </tr>
                 @endforeach

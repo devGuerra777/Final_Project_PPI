@@ -2,6 +2,7 @@
 
 use App\Http\Livewire\Products;
 use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\ProductShow;
 
 
 /*
@@ -15,8 +16,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/login');
 });
 
 Route::middleware([
@@ -24,7 +26,8 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/products',Products::class);
+     Route::get('/products',Products::class)->name('products.index');
+    Route::get('/products/{id}', ProductShow::class)->name('products.show');
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
