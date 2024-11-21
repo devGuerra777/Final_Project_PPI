@@ -2,7 +2,7 @@
     <h1 class="text-2xl font-bold mb-6 text-gray-800 text-center">Lista de Productos</h1>
 
     <!-- Formulario para crear o actualizar productos -->
-    <form wire:submit.prevent="saveProduct" class="space-y-4 mb-6">
+    <form wire:submit.prevent="{{ $product_id ? 'update' : 'store' }}" class="space-y-4 mb-6">
         <div>
             <label class="block text-sm font-medium {{ $errors->has('name') ? 'text-red-500' : 'text-gray-700' }}">Nombre:</label>
             <input type="text" wire:model="name" class="w-full mt-1 p-2 border {{ $errors->has('name') ? 'border-red-500' : 'border-gray-300' }} rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">

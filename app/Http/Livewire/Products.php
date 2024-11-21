@@ -29,18 +29,43 @@ class Products extends Component
         $this->products = Product::all();
     }
 
-    // Método para crear o actualizar un producto
-    public function saveProduct()
-{
-    // Validación de los campos
-    $this->validate([
-        'name' => 'required|string|max:255',
-        'quantity' => 'required|integer|min:1',
-        'price' => 'required|numeric|min:0',
-    ]);
+    // Método para crear un nuevo producto
+    public function store()
+    {
+        // Validación de los campos
+        $this->validate([
+            'name' => 'required|string|max:255',
+            'quantity' => 'required|integer|min:1',
+            'price' => 'required|numeric|min:0',
+        ]);
 
-    // Si estamos actualizando un producto existente
-    if ($this->product_id) {
+        // Crear un nuevo producto
+        Product::create([
+            'name' => $this->name,
+            'description' => $this->description,
+            'quantity' => $this->quantity,
+            'price' => $this->price,
+            'user_id' => auth()->id(), // Asignar el user_id del usuario autenticado
+        ]);
+
+        // Actualizar la lista de productos después de guardar
+        $this->products = Product::all();
+
+        // Limpiar el formulario
+        $this->resetForm();
+    }
+
+    // Método para actualizar un producto existente
+    public function update()
+    {
+        // Validación de los campos
+        $this->validate([
+            'name' => 'required|string|max:255',
+            'quantity' => 'required|integer|min:1',
+            'price' => 'required|numeric|min:0',
+        ]);
+
+        // Buscar el producto y actualizarlo
         $product = Product::find($this->product_id);
 
         $product->update([
@@ -50,23 +75,13 @@ class Products extends Component
             'price' => $this->price,
             'user_id' => auth()->id(), // Asignar el user_id del usuario autenticado
         ]);
-    } else {
-        // Si estamos creando un nuevo producto
-        Product::create([
-            'name' => $this->name,
-            'description' => $this->description,
-            'quantity' => $this->quantity,
-            'price' => $this->price,
-            'user_id' => auth()->id(), // Asignar el user_id del usuario autenticado
-        ]);
+
+        // Actualizar la lista de productos después de actualizar
+        $this->products = Product::all();
+
+        // Limpiar el formulario
+        $this->resetForm();
     }
-
-    // Actualizar la lista de productos después de guardar
-    $this->products = Product::all();
-
-    // Limpiar el formulario
-    $this->resetForm();
-}
 
     // Método para eliminar un producto
     public function deleteProduct($id)
