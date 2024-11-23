@@ -7,63 +7,68 @@
         </div>
     @endif
 
-    <div class="bg-white shadow-lg rounded-lg p-6">
+    <div class="bg-white shadow-lg rounded-lg p-6 space-y-6">
         @if ($isEditing)
             <!-- Formulario de edición -->
             <form wire:submit.prevent="updateProduct" class="space-y-6">
-                <div>
-                    <label for="name" class="block text-sm font-medium text-gray-700">Nombre</label>
-                    <input 
-                        wire:model="name" 
-                        id="name" 
-                        type="text" 
-                        class="mt-1 block w-full border {{ $errors->has('name') ? 'border-red-500' : 'border-gray-300' }} rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                    >
-                    @error('name') 
-                        <span class="text-red-500 text-sm mt-1">{{ $message }}</span> 
-                    @enderror
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-700">Nombre</label>
+                        <input 
+                            wire:model="name" 
+                            id="name" 
+                            type="text" 
+                            class="mt-1 block w-full border {{ $errors->has('name') ? 'border-red-500' : 'border-gray-300' }} rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                        >
+                        @error('name') 
+                            <span class="text-red-500 text-sm mt-1">{{ $message }}</span> 
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="description" class="block text-sm font-medium text-gray-700">Descripción</label>
+                        <textarea 
+                            wire:model="description" 
+                            id="description" 
+                            rows="3" 
+                            class="mt-1 block w-full border {{ $errors->has('description') ? 'border-red-500' : 'border-gray-300' }} rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                        ></textarea>
+                        @error('description') 
+                            <span class="text-red-500 text-sm mt-1">{{ $message }}</span> 
+                        @enderror
+                    </div>
                 </div>
 
-                <div>
-                    <label for="description" class="block text-sm font-medium text-gray-700">Descripción</label>
-                    <textarea 
-                        wire:model="description" 
-                        id="description" 
-                        rows="3" 
-                        class="mt-1 block w-full border {{ $errors->has('description') ? 'border-red-500' : 'border-gray-300' }} rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                    ></textarea>
-                    @error('description') 
-                        <span class="text-red-500 text-sm mt-1">{{ $message }}</span> 
-                    @enderror
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div>
+                        <label for="quantity" class="block text-sm font-medium text-gray-700">Cantidad</label>
+                        <input 
+                            wire:model="quantity" 
+                            id="quantity" 
+                            type="number" 
+                            class="mt-1 block w-full border {{ $errors->has('quantity') ? 'border-red-500' : 'border-gray-300' }} rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                        >
+                        @error('quantity') 
+                            <span class="text-red-500 text-sm mt-1">{{ $message }}</span> 
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="price" class="block text-sm font-medium text-gray-700">Precio</label>
+                        <input 
+                            wire:model="price" 
+                            id="price" 
+                            type="number" 
+                            step="0.01" 
+                            class="mt-1 block w-full border {{ $errors->has('price') ? 'border-red-500' : 'border-gray-300' }} rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                        >
+                        @error('price') 
+                            <span class="text-red-500 text-sm mt-1">{{ $message }}</span> 
+                        @enderror
+                    </div>
                 </div>
 
-                <div>
-                    <label for="quantity" class="block text-sm font-medium text-gray-700">Cantidad</label>
-                    <input 
-                        wire:model="quantity" 
-                        id="quantity" 
-                        type="number" 
-                        class="mt-1 block w-full border {{ $errors->has('quantity') ? 'border-red-500' : 'border-gray-300' }} rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                    >
-                    @error('quantity') 
-                        <span class="text-red-500 text-sm mt-1">{{ $message }}</span> 
-                    @enderror
-                </div>
-
-                <div>
-                    <label for="price" class="block text-sm font-medium text-gray-700">Precio</label>
-                    <input 
-                        wire:model="price" 
-                        id="price" 
-                        type="number" 
-                        step="0.01" 
-                        class="mt-1 block w-full border {{ $errors->has('price') ? 'border-red-500' : 'border-gray-300' }} rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                    >
-                    @error('price') 
-                        <span class="text-red-500 text-sm mt-1">{{ $message }}</span> 
-                    @enderror
-                </div>
-                <div>
+                <div class="mb-6">
                     <label for="categories" class="block text-sm font-medium text-gray-700">Categorías</label>
                     <select 
                         wire:model="selectedCategories" 
@@ -80,7 +85,7 @@
                     @enderror
                 </div>
 
-                <div class="flex justify-between mt-4">
+                <div class="flex justify-between mt-4 space-x-4">
                     <!-- Botón Guardar -->
                     <button 
                         type="submit" 
@@ -111,15 +116,26 @@
                     <p class="text-lg text-gray-600">${{ number_format($product->price, 2) }}</p>
                 </div>
                 <div class="flex justify-between items-center">
-                <h2 class="text-xl font-bold text-gray-700">Categorías:</h2>
-                <ul class="list-disc ml-6 text-lg text-gray-600">
-                    @forelse ($product->categories as $category)
-                        <li>{{ $category->name }}</li>
-                    @empty
-                        <li>No hay categorías asociadas</li>
-                    @endforelse
-                </ul>
+                    <h2 class="text-xl font-bold text-gray-700">Categorías:</h2>
+                    <ul class="list-disc ml-6 text-lg text-gray-600">
+                        @forelse ($product->categories as $category)
+                            <li>{{ $category->name }}</li>
+                        @empty
+                            <li>No hay categorías asociadas</li>
+                        @endforelse
+                    </ul>
                 </div>
+            </div>
+
+            <!-- Imagen del producto -->
+            <div class="p-6 bg-white shadow-md rounded-md mt-6">
+                @if ($product->image)
+                    <div class="mt-4">
+                        <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-64 h-64 object-cover rounded-md mx-auto">
+                    </div>
+                @else
+                    <p class="mt-4 text-gray-500 text-center">No hay imagen disponible para este producto.</p>
+                @endif
             </div>
 
             <!-- Botones de acciones -->

@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 use App\Models\Product;
 use App\Models\Category;
+use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Log;
 
 use Livewire\Component;
@@ -10,7 +11,10 @@ use Livewire\Component;
 class CreateProduct extends Component
 {
 
-    public $name, $description, $quantity, $price;
+    use WithFileUploads;
+
+    public $name, $description, $quantity, $price,$image;
+
     public $categories = []; // Para almacenar las categorías seleccionadas
     public $categoriesList; // Para cargar todas las categorías disponibles
 
@@ -38,7 +42,11 @@ class CreateProduct extends Component
             'price' => 'required|numeric|min:0',
             'categories' => 'required|array',
             'categories.*' => 'exists:categories,id',
+            'image' => 'nullable|image|max:2048', // Máximo 2MB
         ]);
+
+        // Guarda la imagen en storage/public/products y retorna el nombre del archivo
+        $imagePath = $this->image ? $this->image->store('products', 'public') : null;
 
         // Crear el producto
         $product = Product::create([
@@ -47,6 +55,7 @@ class CreateProduct extends Component
             'quantity' => $this->quantity,
             'price' => $this->price,
             'user_id' => auth()->id(),
+            'image' => $imagePath,
         ]);
 
         // Asociar las categorías

@@ -2,7 +2,7 @@
     <h1 class="text-2xl font-bold mb-6">Crear Nuevo Producto</h1>
 
     <!-- Formulario para crear un nuevo producto -->
-    <form wire:submit.prevent="store" class="bg-white p-6 rounded-lg shadow-md">
+    <form wire:submit.prevent="store" class="bg-white p-6 rounded-lg shadow-md" enctype="multipart/form-data">
         <!-- Campo Nombre -->
         <div class="mb-4">
             <label for="name" class="block text-sm font-medium text-gray-700">Nombre</label>
@@ -42,15 +42,33 @@
             <span class="text-red-600 text-sm">{{ $message }}</span>
             @enderror
         </div>
-        <select wire:model="categories" multiple class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 p-2">
-            @foreach($categoriesList as $category)
-                <option value="{{ $category->id }}">{{ $category->name }}</option>
-            @endforeach
-        </select>
 
+        <!-- Campo Categorías -->
+        <div class="mb-4">
+            <label for="categories" class="block text-sm font-medium text-gray-700">Categorías</label>
+            <select wire:model="categories" multiple class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 p-2">
+                @foreach($categoriesList as $category)
+                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                @endforeach
+            </select>
+        </div>
 
+        <!-- Campo Imagen -->
+        <div class="mb-4">
+            <label for="image" class="block text-sm font-medium text-gray-700">Imagen del Producto</label>
+            <input type="file" id="image" wire:model="image" accept="image/*"
+                   class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 p-2">
+            @error('image')
+            <span class="text-red-600 text-sm">{{ $message }}</span>
+            @enderror
 
-
+            <!-- Vista previa de la imagen -->
+            @if ($image)
+                <div class="mt-2">
+                    <img src="{{ $image->temporaryUrl() }}" alt="Vista previa" class="w-32 h-32 object-cover rounded-md">
+                </div>
+            @endif
+        </div>
 
         <!-- Botones -->
         <div class="flex justify-end space-x-4">

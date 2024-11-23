@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('quantity');
             $table->decimal('price', 10, 2);
             $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Referencia al usuario
+            $table->string('image')->nullable(); // Campo para guardar el nombre o ruta de la imagen
             $table->timestamps();
         });
     }

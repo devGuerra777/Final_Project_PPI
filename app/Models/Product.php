@@ -17,6 +17,7 @@ class Product extends Model
         'quantity',
         'price',
         'user_id',
+        'image',
     ];
     /**
      * Relación con el modelo User (muchos a uno).
