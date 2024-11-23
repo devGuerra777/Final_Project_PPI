@@ -24,5 +24,10 @@ class Product extends Model
     {
         return $this->belongsTo(User::class);
     }
+    // Relación muchos a muchos (m:n): Un producto puede pertenecer a muchas categorías
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, 'category_product', 'product_id', 'category_id');
+    }
 
 }

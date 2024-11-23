@@ -1,21 +1,22 @@
 <?php
 
-/*namespace App\Livewire;
-
-use Livewire\Component;
-
-class Products extends Component
-{
-    public function render()
-    {
-        return view('livewire.products');
-    }
-}*/
-
 namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\Product;
+
+
+
+
+
+//TODO FALTA POR CREAR LA VISTA Y LA LOGICA PARA HACER USO DE LA RELACION M:N MUCHOS A MUCHOS 
+//DE LA TABLA PIVOTE QUE HACEMOS USO CATEGORIAS, YA CREEAMOS LAS SEEDES ACOMODAMOS EL LAYOUT Y DEFINIMOS LAS RELACIONES EN EL MODELO
+
+
+
+
+
+
 
 class Products extends Component
 {
@@ -113,6 +114,8 @@ class Products extends Component
 
     public function render()
     {
-        return view('livewire.products')->layout('layouts.app');  // Especifica el layout correcto
+        return view('livewire.products')->layout('layouts.app');
     }
+
+
 }
