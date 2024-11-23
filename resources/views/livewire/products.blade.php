@@ -1,4 +1,10 @@
 <div class="p-6 bg-white shadow-md rounded-lg max-w-6xl mx-auto">
+        @if (session('error'))
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
+                <strong>Error:</strong> {{ session('error') }}
+            </div>
+        @endif
+
     <h1 class="text-2xl font-bold mb-6 text-gray-800 text-center">Lista de Productos</h1>
 
     <!-- Botón para agregar producto -->

@@ -29,7 +29,7 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/products/create', CreateProduct::class)->name('products.create'); // Crear producto formulario
-    Route::get('/products/trashed', TrashedProducts::class)->name('products.trashed'); //MIUESTRA LOS PRODUCTOS ELIMINADOS DE MANERA LOGICA Y SI ERES ADMIN TE PERMITE BORRARLOS
+    Route::get('/products/trashed', TrashedProducts::class)->name('products.trashed')->middleware('role:admin'); //MIUESTRA LOS PRODUCTOS ELIMINADOS LOGICAMENTE SOLO ADMINS
     Route::get('/products',Products::class)->name('products.index');    //MUESTRA TODOS LOS PRODUCTOS EN UNA TABLA Y ESTA EL BOTON DE EVR Y ELIMINAR
     Route::get('/products/{id}', ProductShow::class)->name('products.show');    //MUESTRA LA INFORMACION DE UN PRODUCTO Y PERMITE EDITAR Y ELIMINA DE MANERA PERMANENTE
     Route::get('/dashboard', function () {
