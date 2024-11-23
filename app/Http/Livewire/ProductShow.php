@@ -4,20 +4,26 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\Product;
+use App\Models\Category;
 
 class ProductShow extends Component
 {
     public $product;
     public $name, $description, $quantity, $price;
     public $isEditing = false; // Controla el modo de edición
+    public $categories;
+    public $selectedCategories = [];
 
     public function mount($id)
     {
-        $this->product = Product::findOrFail($id);
+        $this->product = Product::with('categories')->findOrFail($id); // Incluye las categorías
         $this->name = $this->product->name;
         $this->description = $this->product->description;
         $this->quantity = $this->product->quantity;
         $this->price = $this->product->price;
+        // Carga las categorías disponibles y seleccionadas
+        $this->categories = Category::all();
+        $this->selectedCategories = $this->product->categories->pluck('id')->toArray();
     }
 
     public function enableEditing()
@@ -38,6 +44,7 @@ class ProductShow extends Component
             'description' => 'nullable|string',
             'quantity' => 'required|integer|min:1',
             'price' => 'required|numeric|min:0',
+            'selectedCategories' => 'array', // Validación para categorías
         ]);
 
         $this->product->update([
@@ -47,9 +54,13 @@ class ProductShow extends Component
             'price' => $this->price,
         ]);
 
+        // Sincronizar categorías
+        $this->product->categories()->sync($this->selectedCategories);
+
         $this->isEditing = false;
         session()->flash('message', 'Producto actualizado con éxito.');
     }
+
 
     public function resetFields()
     {

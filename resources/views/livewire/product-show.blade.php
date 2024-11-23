@@ -63,6 +63,22 @@
                         <span class="text-red-500 text-sm mt-1">{{ $message }}</span> 
                     @enderror
                 </div>
+                <div>
+                    <label for="categories" class="block text-sm font-medium text-gray-700">Categorías</label>
+                    <select 
+                        wire:model="selectedCategories" 
+                        id="categories" 
+                        multiple 
+                        class="mt-1 block w-full border {{ $errors->has('selectedCategories') ? 'border-red-500' : 'border-gray-300' }} rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                    >
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        @endforeach
+                    </select>
+                    @error('selectedCategories') 
+                        <span class="text-red-500 text-sm mt-1">{{ $message }}</span> 
+                    @enderror
+                </div>
 
                 <div class="flex justify-between mt-4">
                     <!-- Botón Guardar -->
@@ -93,6 +109,16 @@
                 <div class="flex justify-between items-center">
                     <h2 class="text-xl font-bold text-gray-700">Precio:</h2>
                     <p class="text-lg text-gray-600">${{ number_format($product->price, 2) }}</p>
+                </div>
+                <div class="flex justify-between items-center">
+                <h2 class="text-xl font-bold text-gray-700">Categorías:</h2>
+                <ul class="list-disc ml-6 text-lg text-gray-600">
+                    @forelse ($product->categories as $category)
+                        <li>{{ $category->name }}</li>
+                    @empty
+                        <li>No hay categorías asociadas</li>
+                    @endforelse
+                </ul>
                 </div>
             </div>
 

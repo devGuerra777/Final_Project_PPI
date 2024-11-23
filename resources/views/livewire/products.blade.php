@@ -17,6 +17,7 @@
                     <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">Descripción</th>
                     <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">Cantidad</th>
                     <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">Precio</th>
+                    <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">Categorías</th>
                     <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">Acciones</th>
                 </tr>
             </thead>
@@ -27,6 +28,13 @@
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $product->description }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $product->quantity }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $product->price }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            @if($product->categories->isNotEmpty())
+                                {{ $product->categories->pluck('name')->join(', ') }}
+                            @else
+                                <span class="text-gray-400">Sin Categorías</span>
+                            @endif
+                        </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                             <a href="{{ route('products.show', $product->id) }}" class="text-blue-600 hover:text-blue-900">Ver</a>
                             <button wire:click="deleteProduct({{ $product->id }})" class="ml-4 text-red-600 hover:text-red-900">Eliminar</button>

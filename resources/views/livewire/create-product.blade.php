@@ -42,6 +42,15 @@
             <span class="text-red-600 text-sm">{{ $message }}</span>
             @enderror
         </div>
+        <select wire:model="categories" multiple class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 p-2">
+            @foreach($categoriesList as $category)
+                <option value="{{ $category->id }}">{{ $category->name }}</option>
+            @endforeach
+        </select>
+
+
+
+
 
         <!-- Botones -->
         <div class="flex justify-end space-x-4">
