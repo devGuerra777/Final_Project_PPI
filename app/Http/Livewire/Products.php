@@ -5,13 +5,6 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\Product;
 
-
-
-
-
-//TODO FALTA POR CREAR LA VISTA Y LA LOGICA PARA HACER USO DE LA RELACION M:N MUCHOS A MUCHOS 
-//DE LA TABLA PIVOTE QUE HACEMOS USO CATEGORIAS, YA CREEAMOS LAS SEEDES ACOMODAMOS EL LAYOUT Y DEFINIMOS LAS RELACIONES EN EL MODELO
-
 class Products extends Component
 {
     public $products; // Variable para almacenar la lista de productos
@@ -29,17 +22,6 @@ class Products extends Component
     {
         Product::find($id)->delete();
         $this->products = Product::all(); // Actualiza la lista de productos
-    }
-
-    // Método para editar un producto
-    public function editProduct($id)
-    {
-        $product = Product::find($id);
-        $this->product_id = $id;
-        $this->name = $product->name;
-        $this->description = $product->description;
-        $this->quantity = $product->quantity;
-        $this->price = $product->price;
     }
 
     public function render()
