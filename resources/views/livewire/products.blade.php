@@ -1,18 +1,21 @@
 <div class="p-6 bg-white shadow-md rounded-lg max-w-6xl mx-auto">
-        @if (session('error'))
-            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
-                <strong>Error:</strong> {{ session('error') }}
-            </div>
-        @endif
+    @if (session('error'))
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
+            <strong>Error:</strong> {{ session('error') }}
+        </div>
+    @endif
 
     <h1 class="text-2xl font-bold mb-6 text-gray-800 text-center">Lista de Productos</h1>
 
-    <!-- Botón para agregar producto -->
-    <div class="mb-4 text-right">
-        <a href="{{ route('products.create') }}" class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition">
+    <!-- Botones para acciones -->
+    <div class="mb-4 flex justify-end space-x-4">
+        <a href="{{ route('products.create') }}" 
+           class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition">
             Agregar Producto
-        </a>
-        <a href="{{ route('products.trashed') }}" class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition">
+        </a>  
+
+        <a href="{{ route('products.trashed') }}" 
+           class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition">
             Productos Eliminados
         </a>
     </div>
@@ -45,8 +48,10 @@
                             @endif
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                            <a href="{{ route('products.show', $product->id) }}" class="text-blue-600 hover:text-blue-900">Ver</a>
-                            <button wire:click="deleteProduct({{ $product->id }})" class="ml-4 text-red-600 hover:text-red-900">Eliminar</button>
+                            <a href="{{ route('products.show', $product->id) }}" 
+                               class="text-blue-600 hover:text-blue-900">Ver</a>
+                            <button wire:click="deleteProduct({{ $product->id }})" 
+                                    class="ml-4 text-red-600 hover:text-red-900">Eliminar</button>
                         </td>
                     </tr>
                 @endforeach

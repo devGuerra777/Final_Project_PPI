@@ -20,11 +20,12 @@ class ProductFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->word(),  // Genera un nombre de producto
-            'description' => $this->faker->sentence(),  // Descripción del producto
-            'quantity' => $this->faker->numberBetween(1, 100),  // Cantidad en stock
-            'price' => $this->faker->randomFloat(2, 1, 1000),  // Precio del producto
-            'user_id' => User::factory(),  // Asocia un usuario aleatorio
+            'name' => $this->faker->words(3, true), // Nombre aleatorio
+            'description' => $this->faker->sentence(), // Descripción aleatoria
+            'quantity' => $this->faker->numberBetween(1, 100), // Stock aleatorio
+            'price' => $this->faker->randomFloat(2, 10, 1000), // Precio aleatorio
+            'user_id' => User::inRandomOrder()->firstOrFail()->id,
+            'image' => $this->faker->imageUrl(640, 480, 'products', true), // URL de imagen
         ];
     }
 
