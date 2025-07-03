@@ -35,6 +35,11 @@ RUN php artisan config:clear
 
 # Expone el puerto web
 EXPOSE 80
+# Copia el script entrypoint al contenedor
+COPY entrypoint.sh /entrypoint.sh
 
-# Inicia Apache
-CMD ["apache2-foreground"]
+# Da permisos de ejecución al script
+RUN chmod +x /entrypoint.sh
+
+# Usa el script como punto de entrada
+ENTRYPOINT ["/entrypoint.sh"]
