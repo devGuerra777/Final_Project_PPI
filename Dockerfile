@@ -17,15 +17,15 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-av
 # Directorio de trabajo
 WORKDIR /var/www/html
 
-# Copia archivos necesarios para instalar dependencias
+# Copia composer y package files
 COPY composer.json composer.lock ./
 COPY package.json package-lock.json ./
 
 # Instala Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install --no-dev --optimize-autoloader || true  # Evita que falle por artisan
 
-# Instala dependencias de Vite y compila assets
+# Instala dependencias Vite y build
 RUN npm install && npm run build
 
 # Copia el resto del código fuente
@@ -35,17 +35,11 @@ COPY . .
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Limpia cache Laravel
-RUN php artisan config:clear \
-    && php artisan view:clear \
-    && php artisan route:clear
-
-# Expone el puerto web
+# Exponer puerto
 EXPOSE 80
 
-# Copia el script entrypoint al contenedor
+# Copia entrypoint
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-# Usa el script como punto de entrada
 ENTRYPOINT ["/entrypoint.sh"]
